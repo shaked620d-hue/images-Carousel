@@ -1,0 +1,10 @@
+import React from 'react'
+
+export default function CarouselItem({src, alt}) {
+  return (
+    <div className='carousel-item'>
+      <img src={src} alt={alt}/>
+      
+    </div>
+  )
+}
