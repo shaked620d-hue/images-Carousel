@@ -1,6 +1,5 @@
 import Carousel from "./Carousel/Carousel";
-import RecipesCarousel from "./RecipesCarousel/RecipesCarousel"; 
-
+import RecipesCarousel from "./RecipesCarousel/RecipesCarousel.jsx";
 
 const images = [
   "https://placehold.co/800x450/4f46e5/ffffff?text=1",

@@ -51,7 +51,7 @@ export default function Carousel({ images, intervalSeconds = 3 }) {
                             key={index}
                             className={index === selected ? 'carousel-dot active' : 'carousel-dot'}
                             onClick={() => setSelected(index)}
-                        />
+                        >{index+1}</button>
                     ))
 
                 }

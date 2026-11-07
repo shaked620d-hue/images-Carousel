@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import Carousel from './Carousel';
-
+import Carousel from '../Carousel/Carousel';
 export default function RecipesCarousel() {
     const [images, setImages] = useState([])
     const [loading, setLoading] = useState(true)
