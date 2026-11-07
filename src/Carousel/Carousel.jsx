@@ -1,8 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import CarouselItem from './CarouselItem'
 
 export default function Carousel({ images, intervalSeconds = 3 }) {
     const [selected, setSelected] = useState(0)
+
+    useEffect(() => {
+        console.log("Effect running, selected is:", selected);
+        const timer = setInterval(() => {
+            setSelected((prevSelected) => (prevSelected + 1) % images.length);
+        }, intervalSeconds * 1000);
+
+        return () => {
+            console.log("Cleanup running, clearing timer for selected:", selected);
+            clearInterval(timer);
+        }
+
+    }, [selected, intervalSeconds, images.length])
+
 
     function move(direction) {
         setSelected((prevSelected) => {
