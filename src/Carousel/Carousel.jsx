@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import CarouselItem from './CarouselItem'
+import "./Carousel.css";
+
 
 export default function Carousel({ images, intervalSeconds = 3 }) {
     const [selected, setSelected] = useState(0)
@@ -51,14 +53,14 @@ export default function Carousel({ images, intervalSeconds = 3 }) {
                             key={index}
                             className={index === selected ? 'carousel-dot active' : 'carousel-dot'}
                             onClick={() => setSelected(index)}
-                        >{index+1}</button>
+                        />
                     ))
 
                 }
             </div>
 
-            <button className='carousel-arrow prev' onClick={() => move(-1)}>הקודם</button>
-            <button className='carousel-arrow next' onClick={() => move(1)}>הבא</button>
+            <button className='carousel-arrow prev' onClick={() => move(-1)}>❮</button>
+            <button className='carousel-arrow next' onClick={() => move(1)}>❯</button>
 
         </div>
     )
