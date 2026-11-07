@@ -1,29 +1,44 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Carousel from '../Carousel/Carousel';
+
+
 export default function RecipesCarousel() {
     const [images, setImages] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
 
     useEffect(() =>{
-        const fetchRecipes = async () => {
-            try{
-                const response = await axios.get('https://dummyjson.com/recipes?limit=6&select=name,image')
+        const controller = new AbortController(); // שלב 1
 
+        const loadImages = async () => {
+            try{
+                const response = await axios.get('https://dummyjson.com/recipes?limit=6&select=name,image', {
+                    signal: controller.signal
+                }); // שלב 2
+
+               
+                
                 const imgeUrls = response.data.recipes.map(recipe => recipe.image);
            
                 setImages(imgeUrls);
-                setLoading(false)
+                setLoading(false) // כיבוי loading בהצלחה
            
             }
             catch (err) {
+            if (axios.isCancel(err) || err.name === "CanceledError" || err.name === "AbortError") return; // שלב 4             
                 setError(err.message);
-                setLoading(false);
+                setLoading(false); // כיבוי loading בשגיאה
             }
         };
 
-        fetchRecipes();
+        loadImages();
+
+        return () => {
+            console.log("cleanup"); 
+            controller.abort(); // שלב 3
+        }
+        
     }, []);
 
     if (loading) return <div className="carousel-message">טוען מתכונים...</div>
