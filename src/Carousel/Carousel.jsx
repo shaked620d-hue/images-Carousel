@@ -1,18 +1,51 @@
-import React from 'react'
+import React, { useState } from 'react'
 import CarouselItem from './CarouselItem'
 
-export default function Carousel( { images, intervalSeconds = 3}) {
-  return (
-    <div className='carousel' >
-      {
-        images.map((imgSrc, index) =>(
-            <CarouselItem
-            key={index}
-            src = {imgSrc}
-            alt = {`תמונה ${index+1}`}
-            />
-        ))
-      }
-    </div>
-  )
+export default function Carousel({ images, intervalSeconds = 3 }) {
+    const [selected, setSelected] = useState(0)
+
+    function move(direction) {
+        setSelected((prevSelected) => {
+            let newIndex = prevSelected + direction
+            if (newIndex >= images.length) {
+                return 0;
+            }
+            if (newIndex < 0)
+                return images.length - 1
+            return newIndex
+
+        });
+    }
+
+    return (
+        <div className='carousel' >
+            {
+                images.map((imgSrc, index) => (
+                    index == selected && (
+                        <CarouselItem
+                            key={index}
+                            src={imgSrc}
+                            alt={`תמונה ${index + 1}`}
+                        />)
+                ))
+            }
+            <div className='carousel-dots'>
+                {
+                    images.map((_, index) => (
+
+                        <button
+                            key={index}
+                            className={index === selected ? 'carousel-dot active' : 'carousel-dot'}
+                            onClick={() => setSelected(index)}
+                        />
+                    ))
+
+                }
+            </div>
+
+            <button className='carousel-arrow prev' onClick={() => move(-1)}>הקודם</button>
+            <button className='carousel-arrow next' onClick={() => move(1)}>הבא</button>
+
+        </div>
+    )
 }
